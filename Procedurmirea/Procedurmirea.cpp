@@ -232,36 +232,70 @@ void bk() {
 		}
 	}
 	cout << chislocomp << endl;
-	while (true) {
-		checkchislo = chislocomp;
-		plus = 0;
-		minus = 0;
-		int minuscheck[10]{ 0 };
-		cout << "Введите 4 - x значное число : ";
-		cin >> chislo;
-		while (chislo > 0) {
-			check = chislo % 10;
-			check1 = checkchislo % 10; \
-				minuscheck[check]++;
-			chislo /= 10;
-			checkchislo /= 10;
-			if (check1 == check) {
-				plus++;
-			}
-			r--;
-		}
-		checkchislo = chislocomp;
-		while (checkchislo > 0) {
-			check1 = checkchislo % 10;
-			if (minuscheck[check1] != 0) minus++;
-			checkchislo /= 10;
-		}
-		if (plus == 4) {
-			cout << "Верно!" << endl;
-			break;
-		}
-		else cout << plus << " Плюса " << minus - plus << " Минуса" << endl;
-	}
+    string chislochek1 = "";
+    int chis = chislocomp;
+    while (chis > 0) {
+        for (int h = 0; h < 10; h++) {
+            if (chis % 10 == h) chislochek1 += h + 48;
+        }
+        chis /= 10;
+    }
+    reverse(chislochek1.begin(), chislochek1.end());
+    while (true) {
+        checkchislo = chislocomp;
+        int cl = chislocomp;
+        string rez = "****";
+        string rez1 = "****";
+        int k = 0;
+        plus = 0;
+        minus = 0;
+        int minuscheck[10]{ 0 };
+        cout << "Введите 4 - x значное число : ";
+        cin >> chislo;
+        string chislochek="";
+        chis = chislo;
+        while(chis>0){
+            for (int h = 0; h < 10; h++) {
+                if (chis % 10 == h) chislochek += h + 48;
+            }
+            chis /= 10;
+        }
+        reverse(chislochek.begin(), chislochek.end());
+        if (chislochek.length()!=4) {
+            cout << "Не 4-x значное" << endl;
+        }
+        else {
+            while (chislo > 0) {
+                check = chislo % 10;
+                check1 = checkchislo % 10;
+                minuscheck[check]++;
+                string pr;
+                chislo /= 10;
+                for (int j = 0; j < 10; j++) {
+                    if (j == check) pr = j + 48;
+                }
+                checkchislo /= 10;
+                if (check1 == check) {
+                    plus++;
+                    rez.replace(3 - k, 1, pr);
+                }
+                r--;
+                k++;
+            }
+            string timepr;
+            for (int f = 0; f < 4; f++) {
+                for (int l = 0; l < 4; l++) {
+                    timepr = chislochek[f];
+                    if (chislochek[f] == chislochek1[l] && rez[f] == 42) rez1.replace(f, 1, timepr);
+                }
+            }
+            if (plus == 4) {
+                cout << "Верно!" << endl;
+                break;
+            }
+            else cout <<"Плюсы: " << rez<<" Минусы: " <<rez1<<endl;
+        }
+    }
 }
 void file2() {
     setlocale(LC_ALL, "Russian");
@@ -413,12 +447,18 @@ int shariki() {
 
     return 0;
 }
+void test() {
+    int i;
+    cin >> i;
+    int *k= new int[i];
+}
 int main()
 {
     setlocale(LC_ALL, "Russian");
-    //bk();
-    optimizmonach();
+    bk();
+    //optimizmonach();
     //sinusoida();
 	//dz4_4();
     //shariki();
+    //file2();
 }
